@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">COVID-19 Tracker</string>
+    <string name="information">Corona virus cases:\n\n\nTotal Deaths:\n\n\nTotal Recovered:</string>
+    <string name="world">world</string>
+    <string name="flag">flag</string>
+    <string name="worldwide_cases">Worldwide cases</string>
+    <string name="covid_19_map">COVID-19 map</string>
+    <string name="check_for_updates">Check for updates</string>
+    <string name="about_app">about app</string>
+    <string name="references">references</string>
+    <string name="help_fight_covid_19">Help fight covid-19</string>
+    <string-array name="Countries">
+        <item>Jordan</item>
+        <item>United-Arab-Emirates</item>
+        <item>Iraq</item>
+        <item>Qatar</item>
+        <item>Saudi-Arabia</item>
+        <item>Lebanon</item>
+        <item>State-of-Palestine</item>
+        <item>Egypt</item>
+        <item>Bahrain</item>
+        <item>Morocco</item>
+        <item>Libya</item>
+        <item>Algeria</item>
+        <item>Turkey</item>
+    </string-array>
+</resources>
