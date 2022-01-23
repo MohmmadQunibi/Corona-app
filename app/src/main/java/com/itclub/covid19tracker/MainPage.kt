@@ -4,11 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import org.jsoup.Jsoup
@@ -33,20 +34,16 @@ class MainPage : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val countrySpinner = findViewById<Spinner>(R.id.country_spinner)
-        val countries = resources.getStringArray(R.array.Countries)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, countries)
-        countrySpinner.adapter = adapter
-        countrySpinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parentView: AdapterView<*>,
-                selectedItemView: View,
-                position: Int,
-                id: Long
-            ) {
-                // your code here
-                val item = parentView.getItemAtPosition(position)
-                selectedItem = item.toString()
+        val countriesMenu = findViewById<AutoCompleteTextView>(R.id.countries_menu)
+        val countriesT = resources.getStringArray(R.array.Countries)
+        val adapterT = ArrayAdapter(this, R.layout.list_countries, countriesT)
+        countriesMenu.setAdapter(adapterT)
+        countriesMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                selectedItem = p0.toString()
                 mainPageProgressBar.visibility = View.VISIBLE
                 countrySV.visibility = View.GONE
                 when (selectedItem) {
@@ -67,10 +64,10 @@ class MainPage : AppCompatActivity() {
                 getData()
             }
 
-            override fun onNothingSelected(parentView: AdapterView<*>?) {
-                // your code here
+            override fun afterTextChanged(p0: Editable?) {
             }
-        }
+        })
+        countriesMenu.setText(countriesT[0], false)
     }
 
     private fun getData() {
