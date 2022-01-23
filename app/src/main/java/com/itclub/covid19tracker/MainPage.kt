@@ -4,14 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.squareup.picasso.Picasso
 import org.jsoup.Jsoup
 import java.util.concurrent.Executors
 
@@ -21,7 +21,6 @@ class MainPage : AppCompatActivity() {
     private var timeUpdate: TextView? = null
     private var selectedItem: String? = null
     private lateinit var countrySV: ScrollView
-    private var worldMapImage: ImageView? = null
     private lateinit var mainPageProgressBar: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,26 +30,20 @@ class MainPage : AppCompatActivity() {
         timeUpdate = findViewById(R.id.last_update)
         mainPageProgressBar = findViewById(R.id.progressBar)
         countrySV = findViewById(R.id.countrySV)
-        worldMapImage = findViewById(R.id.world_map_image)
         val countryFlag = findViewById<ImageView>(R.id.country_flag)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        test()
 
-        val countrySpinner = findViewById<Spinner>(R.id.country_spinner)
-        val countries = resources.getStringArray(R.array.Countries)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, countries)
-        countrySpinner.adapter = adapter
-        countrySpinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parentView: AdapterView<*>,
-                selectedItemView: View,
-                position: Int,
-                id: Long
-            ) {
-                // your code here
-                val item = parentView.getItemAtPosition(position)
-                selectedItem = item.toString()
+        val countriesMenu = findViewById<AutoCompleteTextView>(R.id.countries_menu)
+        val countriesT = resources.getStringArray(R.array.Countries)
+        val adapterT = ArrayAdapter(this, R.layout.list_countries, countriesT)
+        countriesMenu.setAdapter(adapterT)
+        countriesMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                selectedItem = p0.toString()
                 mainPageProgressBar.visibility = View.VISIBLE
                 countrySV.visibility = View.GONE
                 when (selectedItem) {
@@ -68,16 +61,16 @@ class MainPage : AppCompatActivity() {
                     "Algeria" -> countryFlag.setImageResource(R.drawable.algeria_flag)
                     "Turkey" -> countryFlag.setImageResource(R.drawable.turkey_flag)
                 }
-                test()
+                getData()
             }
 
-            override fun onNothingSelected(parentView: AdapterView<*>?) {
-                // your code here
+            override fun afterTextChanged(p0: Editable?) {
             }
-        }
+        })
+        countriesMenu.setText(countriesT[0], false)
     }
 
-    private fun test() {
+    private fun getData() {
         val executor = Executors.newSingleThreadExecutor()
         val handler = Handler(
             Looper.getMainLooper()
@@ -92,12 +85,11 @@ class MainPage : AppCompatActivity() {
             val doc1 = Jsoup.connect("https://www.worldometers.info/coronavirus/").get()
             val number = doc1.getElementsByClass("maincounter-number")
             val cases = doc.getElementsByClass("maincounter-number")
-            val lastUpdated = doc1.select("div.content-inner")
+            val lastUpdated = doc1.select("#page-top + div")
             handler.post {
                 allNumbers = number.text()
                 countryCase = cases.text()
                 lastUpdate = lastUpdated.text()
-                lastUpdate = lastUpdate.substring(30, 69)
                 allNumbers = allNumbers.replace(" ", "\n\n\n")
                 countryCase = countryCase.replace(" ", "\n\n\n")
                 totalText!!.text = allNumbers
@@ -125,7 +117,7 @@ class MainPage : AppCompatActivity() {
                 mainPageProgressBar.visibility = View.VISIBLE
                 countrySV.visibility = View.INVISIBLE
                 Toast.makeText(this, "updating data...", Toast.LENGTH_LONG).show()
-                test()
+                getData()
             }
         }
         return super.onOptionsItemSelected(item)

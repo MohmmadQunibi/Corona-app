@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/Coronaapp/app/src/main/res/layout/activity_main_page.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/Coronaapp/app/src/main/res/layout/activity_settings_page.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/Coronaapp/app/src/main/res/layout/list_countries.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/Coronaapp/app/src/main/res/menu/corona_menu.xml" value="0.13020833333333334" />
       </map>
     </option>
   </component>
