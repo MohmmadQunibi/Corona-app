@@ -16,7 +16,8 @@
             android:value="ca-app-pub-8184047857126843~2551098109" />
         <activity android:name="com.itclub.covid19tracker.SettingsPage"
             android:parentActivityName="com.itclub.covid19tracker.MainPage"/>
-        <activity android:name="com.itclub.covid19tracker.MainPage">
+        <activity android:name="com.itclub.covid19tracker.MainPage"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

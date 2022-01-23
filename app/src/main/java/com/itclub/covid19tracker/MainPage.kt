@@ -11,9 +11,6 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.squareup.picasso.Picasso
 import org.jsoup.Jsoup
 import java.util.concurrent.Executors
@@ -39,8 +36,6 @@ class MainPage : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         test()
-
-        MobileAds.initialize(this)
 
         val countrySpinner = findViewById<Spinner>(R.id.country_spinner)
         val countries = resources.getStringArray(R.array.Countries)
@@ -80,10 +75,6 @@ class MainPage : AppCompatActivity() {
                 // your code here
             }
         }
-
-        val adView = findViewById<AdView>(R.id.mainAD)
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
     }
 
     private fun test() {
@@ -99,14 +90,9 @@ class MainPage : AppCompatActivity() {
                 Jsoup.connect("https://www.worldometers.info/coronavirus/country/$selectedItem/")
                     .get()
             val doc1 = Jsoup.connect("https://www.worldometers.info/coronavirus/").get()
-            val doc3 =
-                Jsoup.connect("https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_pandemic#/media/File:COVID-19_Outbreak_World_Map_per_Capita.svg")
-                    .get()
             val number = doc1.getElementsByClass("maincounter-number")
             val cases = doc.getElementsByClass("maincounter-number")
             val lastUpdated = doc1.select("div.content-inner")
-            val worldMap = doc3.select("img[src$=.png]")[2]
-            val mapUrl = worldMap.absUrl("src")
             handler.post {
                 allNumbers = number.text()
                 countryCase = cases.text()
@@ -117,7 +103,6 @@ class MainPage : AppCompatActivity() {
                 totalText!!.text = allNumbers
                 timeUpdate!!.text = lastUpdate
                 countryCases!!.text = countryCase
-                Picasso.get().load(mapUrl).into(worldMapImage)
                 mainPageProgressBar.visibility = View.GONE
                 countrySV.visibility = View.VISIBLE
             }
