@@ -11,23 +11,23 @@ import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.FirebaseFirestore
+import com.itclub.covid19tracker.databinding.ActivityMainBinding
+import com.itclub.covid19tracker.databinding.ActivitySettingsBinding
 
-class SettingsPage : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings_page)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val toolbar = findViewById<Toolbar>(R.id.settings_toolbar)
-        val aboutApp = findViewById<Button>(R.id.about_app_button)
-        val references = findViewById<Button>(R.id.references_button)
-        val checkForUpdates = findViewById<Button>(R.id.check_for_updates_button)
-        val donate = findViewById<Button>(R.id.donate)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.settingsToolbar.toolbar)
         supportActionBar?.title = "Settings"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        aboutApp.setOnClickListener {
+        binding.aboutAppButton.setOnClickListener {
             val manager = this.packageManager
             val info = manager.getPackageInfo(this.packageName, PackageManager.GET_ACTIVITIES)
             MaterialAlertDialogBuilder(this).setTitle("About")
@@ -37,19 +37,19 @@ class SettingsPage : AppCompatActivity() {
                 .create().show()
         }
 
-        references.setOnClickListener {
+        binding.referencesButton.setOnClickListener {
             val url = "https://www.worldometers.info/coronavirus/"
             val builder = CustomTabsIntent.Builder()
             val customTabsIntent = builder.build()
             customTabsIntent.launchUrl(this, Uri.parse(url))
         }
 
-        checkForUpdates.setOnClickListener {
+        binding.checkForUpdatesButton.setOnClickListener {
             Toast.makeText(this,"Checking for updates...", Toast.LENGTH_SHORT).show()
             checkForUpdate()
         }
 
-        donate.setOnClickListener {
+        binding.donate.setOnClickListener {
             val url = "https://covid19responsefund.org/en/"
             val builder = CustomTabsIntent.Builder()
             val customTabsIntent = builder.build()

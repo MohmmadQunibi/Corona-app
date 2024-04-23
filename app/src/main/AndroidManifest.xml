@@ -14,7 +14,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8184047857126843~2551098109" />
-        <activity android:name="com.itclub.covid19tracker.SettingsPage"
+        <activity android:name="com.itclub.covid19tracker.SettingsActivity"
             android:parentActivityName="com.itclub.covid19tracker.MainActivity"/>
         <activity android:name="com.itclub.covid19tracker.MainActivity"
             android:exported="true">
