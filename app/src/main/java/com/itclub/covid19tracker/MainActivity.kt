@@ -9,27 +9,22 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.itclub.covid19tracker.databinding.ActivityMainBinding
 import org.jsoup.Jsoup
 import java.util.concurrent.Executors
 
-class MainPage : AppCompatActivity() {
-    private var totalText: TextView? = null
-    private var countryCases: TextView? = null
-    private var timeUpdate: TextView? = null
+class MainActivity : AppCompatActivity() {
     private var selectedItem: String? = null
-    private lateinit var countrySV: ScrollView
-    private lateinit var mainPageProgressBar: ProgressBar
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_page)
-        totalText = findViewById(R.id.global_number)
-        countryCases = findViewById(R.id.country_cases)
-        timeUpdate = findViewById(R.id.last_update)
-        mainPageProgressBar = findViewById(R.id.progressBar)
-        countrySV = findViewById(R.id.countrySV)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val countryFlag = findViewById<ImageView>(R.id.country_flag)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -44,8 +39,8 @@ class MainPage : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 selectedItem = p0.toString()
-                mainPageProgressBar.visibility = View.VISIBLE
-                countrySV.visibility = View.GONE
+                binding.progressBar.visibility = View.VISIBLE
+                binding.countrySV.visibility = View.GONE
                 when (selectedItem) {
                     "Jordan" -> countryFlag.setImageResource(R.drawable.jordan_flag)
                     "United-Arab-Emirates" -> countryFlag.setImageResource(R.drawable.uae_flag)
@@ -92,11 +87,11 @@ class MainPage : AppCompatActivity() {
                 lastUpdate = lastUpdated.text()
                 allNumbers = allNumbers.replace(" ", "\n\n\n")
                 countryCase = countryCase.replace(" ", "\n\n\n")
-                totalText!!.text = allNumbers
-                timeUpdate!!.text = lastUpdate
-                countryCases!!.text = countryCase
-                mainPageProgressBar.visibility = View.GONE
-                countrySV.visibility = View.VISIBLE
+                binding.globalNumber.text = allNumbers
+                binding.lastUpdate.text = lastUpdate
+                binding.countryCases.text = countryCase
+                binding.progressBar.visibility = View.GONE
+                binding.countrySV.visibility = View.VISIBLE
             }
         }
     }
@@ -113,10 +108,10 @@ class MainPage : AppCompatActivity() {
                 val intent = Intent(this, SettingsPage::class.java)
                 startActivity(intent)
             }
+
             R.id.action_refresh -> {
-                mainPageProgressBar.visibility = View.VISIBLE
-                countrySV.visibility = View.INVISIBLE
-                Toast.makeText(this, "updating data...", Toast.LENGTH_LONG).show()
+                binding.progressBar.visibility = View.VISIBLE
+                binding.countrySV.visibility = View.INVISIBLE
                 getData()
             }
         }

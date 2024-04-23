@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdk 34
-    namespace 'com.mqunibi.powermenuapp'
 
     defaultConfig {
         applicationId "com.itclub.covid19tracker"
@@ -23,6 +22,10 @@ android {
         }
     }
 
+    viewBinding {
+        enabled = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -31,15 +34,16 @@ android {
         jvmTarget = '17'
     }
 
+    namespace 'com.itclub.covid19tracker'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation platform('com.google.firebase:firebase-bom:32.7.4')
+    implementation platform('com.google.firebase:firebase-bom:32.8.1')
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.core:core-ktx:1.13.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'org.jsoup:jsoup:1.14.3'
+    implementation 'org.jsoup:jsoup:1.17.2'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
