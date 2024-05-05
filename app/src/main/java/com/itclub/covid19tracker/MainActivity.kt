@@ -14,6 +14,8 @@ import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.itclub.covid19tracker.databinding.ActivityMainBinding
 import org.jsoup.Jsoup
 import java.util.concurrent.Executors
@@ -29,6 +31,9 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        MobileAds.initialize(this)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
         val countriesMenu = findViewById<AutoCompleteTextView>(R.id.countries_menu)
         val countriesT = resources.getStringArray(R.array.Countries)
         val adapterT = ArrayAdapter(this, R.layout.list_countries, countriesT)
