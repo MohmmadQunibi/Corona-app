@@ -3,15 +3,17 @@ package com.itclub.covid19tracker
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.FirebaseFirestore
-import com.itclub.covid19tracker.databinding.ActivityMainBinding
 import com.itclub.covid19tracker.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
@@ -26,6 +28,10 @@ class SettingsActivity : AppCompatActivity() {
         setSupportActionBar(binding.settingsToolbar.toolbar)
         supportActionBar?.title = "Settings"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        MobileAds.initialize(this)
+        val adRequest = AdRequest.Builder().build()
+        binding.adViewSettings.loadAd(adRequest)
 
         binding.aboutAppButton.setOnClickListener {
             val manager = this.packageManager
@@ -45,7 +51,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.checkForUpdatesButton.setOnClickListener {
-            Toast.makeText(this,"Checking for updates...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Checking for updates...", Toast.LENGTH_SHORT).show()
             checkForUpdate()
         }
 
@@ -83,10 +89,10 @@ class SettingsActivity : AppCompatActivity() {
                         .create().show()
                 } else {
                     MaterialAlertDialogBuilder(this).setTitle("Update").setMessage(
-                            "There is a new version available\n" +
-                                    "Current version V${info.versionName}\n" +
-                                    "New version V$latestVersion"
-                        )
+                        "There is a new version available\n" +
+                                "Current version V${info.versionName}\n" +
+                                "New version V$latestVersion"
+                    )
                         .setCancelable(true)
                         .setPositiveButton("Update") { _, _ -> goToUrl() }
                         .create().show()

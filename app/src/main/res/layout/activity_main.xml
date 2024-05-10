@@ -163,12 +163,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.gms.ads.AdView
-                    android:id="@+id/adView"
+                    android:id="@+id/adViewMain"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     app:adSize="BANNER"
-                    app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                    app:adUnitId="ca-app-pub-5472437499540198/1992332731"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

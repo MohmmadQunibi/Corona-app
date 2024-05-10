@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="false"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -18,10 +18,13 @@
             tools:replace="android:resource" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8184047857126843~2551098109" />
-        <activity android:name="com.itclub.covid19tracker.SettingsActivity"
-            android:parentActivityName="com.itclub.covid19tracker.MainActivity"/>
-        <activity android:name="com.itclub.covid19tracker.MainActivity"
+            android:value="ca-app-pub-5472437499540198~3496986096" />
+        <activity
+            android:exported="true"
+            android:name="com.itclub.covid19tracker.SettingsActivity"
+            android:parentActivityName="com.itclub.covid19tracker.MainActivity" />
+        <activity
+            android:name="com.itclub.covid19tracker.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

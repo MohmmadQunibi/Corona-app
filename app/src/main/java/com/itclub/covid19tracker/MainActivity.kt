@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         MobileAds.initialize(this)
         val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
+        binding.adViewMain.loadAd(adRequest)
         val countriesMenu = findViewById<AutoCompleteTextView>(R.id.countries_menu)
         val countriesT = resources.getStringArray(R.array.Countries)
         val adapterT = ArrayAdapter(this, R.layout.list_countries, countriesT)
